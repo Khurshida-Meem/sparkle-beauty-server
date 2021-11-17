@@ -19,12 +19,20 @@ async function run() {
         await client.connect();
         const database = client.db("sparkle_beauty");
         const productsCollection = database.collection("products");
+        const reviewsCollection = database.collection("reviews");
 
-        // GET API
+        // GET products API
         app.get('/products', async (req, res) => {
             const cursor = productsCollection.find({});
             const products = await cursor.toArray();
             res.send(products);
+        });
+
+        // GET reviews API
+        app.get('/reviews', async (req, res) => {
+            const cursor = reviewsCollection.find({});
+            const reviews = await cursor.toArray();
+            res.send(reviews);
         });
 
 
