@@ -22,6 +22,7 @@ async function run() {
         const database = client.db("sparkle_beauty");
         const productsCollection = database.collection("products");
         const reviewsCollection = database.collection("reviews");
+        const orderCollection = database.collection("orders");
 
         // GET products API
         app.get('/products', async (req, res) => {
@@ -42,6 +43,13 @@ async function run() {
             const cursor = reviewsCollection.find({});
             const reviews = await cursor.toArray();
             res.send(reviews);
+        });
+
+        app.post('/orders', async (req, res) => {
+            const newOrder = req.body;
+            console.log(newOrder);
+            const result = await orderCollection.insertOne(newOrder);
+            res.send(result);
         });
 
 
