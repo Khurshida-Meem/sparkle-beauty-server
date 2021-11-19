@@ -64,7 +64,7 @@ async function run() {
             const filter = { email: user.email };
             const option = { upsert: true };
             const updateUser = { $set: user };
-            const result = usersCollection.updateOne(filter, updateUser, option);
+            const result = await usersCollection.updateOne(filter, updateUser, option);
             res.send(result);
         });
 
