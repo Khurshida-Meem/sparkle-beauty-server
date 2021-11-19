@@ -52,6 +52,14 @@ async function run() {
             const result = await orderCollection.insertOne(newOrder);
             res.send(result);
         });
+
+        // orders by email
+        app.post('/orders/byEmail', async (req, res) => {
+            const email = req.body;
+            const query = { email: { $in: email } }
+            const order = await orderCollection.find(query).toArray();
+            res.send(order);
+        });
         // POST API to save user
         app.post('/users', async (req, res) => {
             const user = req.body;
