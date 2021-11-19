@@ -32,6 +32,13 @@ async function run() {
             res.send(products);
         });
 
+        // POST API to add product
+        app.post('/products', async (req, res) => {
+            const newProduct = req.body;
+            const result = await productsCollection.insertOne(newProduct);
+            res.send(result);
+        });
+
         // GET dynamic API
         app.get('/products/:id', async (req, res) => {
             const id = req.params.id;
