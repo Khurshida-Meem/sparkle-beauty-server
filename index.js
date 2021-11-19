@@ -55,11 +55,18 @@ async function run() {
         // POST API to save user
         app.post('/users', async (req, res) => {
             const user = req.body;
-            console.log(user)
             const result = await usersCollection.insertOne(user);
             res.send(result);
         });
 
+        app.put('/users', async (req, res) => {
+            const user = req.body;
+            const filter = { email: user.email };
+            const option = { upsert: true };
+            const updateUser = { $set: user };
+            const result = usersCollection.updateOne(filter, updateUser, option);
+            res.send(result);
+        });
 
 
     } finally {
