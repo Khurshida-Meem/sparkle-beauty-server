@@ -23,6 +23,7 @@ async function run() {
         const productsCollection = database.collection("products");
         const reviewsCollection = database.collection("reviews");
         const orderCollection = database.collection("orders");
+        const usersCollection = database.collection("users");
 
         // GET products API
         app.get('/products', async (req, res) => {
@@ -45,10 +46,17 @@ async function run() {
             res.send(reviews);
         });
 
+        // POST API to save orders
         app.post('/orders', async (req, res) => {
             const newOrder = req.body;
-            console.log(newOrder);
             const result = await orderCollection.insertOne(newOrder);
+            res.send(result);
+        });
+        // POST API to save user
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            console.log(user)
+            const result = await usersCollection.insertOne(user);
             res.send(result);
         });
 
