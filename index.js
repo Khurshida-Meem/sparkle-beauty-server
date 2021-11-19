@@ -60,6 +60,14 @@ async function run() {
             const order = await orderCollection.find(query).toArray();
             res.send(order);
         });
+
+        // delete order by id under one email
+        app.delete('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await orderCollection.deleteOne(query);
+            res.json(result);
+        })
         // POST API to save user
         app.post('/users', async (req, res) => {
             const user = req.body;
