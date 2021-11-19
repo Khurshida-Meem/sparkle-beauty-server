@@ -45,6 +45,12 @@ async function run() {
             const reviews = await cursor.toArray();
             res.send(reviews);
         });
+        // POST API to save reviews
+        app.post('/reviews', async (req, res) => {
+            const newReview = req.body;
+            const result = await reviewsCollection.insertOne(newReview);
+            res.send(result);
+        });
 
         // POST API to save orders
         app.post('/orders', async (req, res) => {
