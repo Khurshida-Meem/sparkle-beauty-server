@@ -58,6 +58,13 @@ async function run() {
             const result = await reviewsCollection.insertOne(newReview);
             res.send(result);
         });
+        // GET reviews by email
+        app.post('/reviews/byEmail', async (req, res) => {
+            const email = req.body;
+            const query = { email: { $in: email } }
+            const review = await reviewsCollection.find(query).toArray();
+            res.send(review);
+        });
 
         // POST API to save orders
         app.post('/orders', async (req, res) => {
