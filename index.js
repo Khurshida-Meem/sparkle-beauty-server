@@ -65,6 +65,13 @@ async function run() {
             const review = await reviewsCollection.find(query).toArray();
             res.send(review);
         });
+        // delete review by id under one email
+        app.delete('/reviews/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await reviewsCollection.deleteOne(query);
+            res.json(result);
+        })
 
         // POST API to save orders
         app.post('/orders', async (req, res) => {
