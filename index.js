@@ -71,7 +71,7 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const result = await reviewsCollection.deleteOne(query);
             res.json(result);
-        })
+        });
 
         // POST API to save orders
         app.post('/orders', async (req, res) => {
@@ -94,7 +94,7 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const result = await orderCollection.deleteOne(query);
             res.json(result);
-        })
+        });
         // POST API to save user
         app.post('/users', async (req, res) => {
             const user = req.body;
@@ -122,10 +122,10 @@ async function run() {
         app.put('/users/admin', async (req, res) => {
             const user = req.body;
             const filter = { email: user.email };
-            const updateDoc = { $set: { role: admin } };
+            const updateDoc = { $set: { role: 'admin' } };
             const result = await usersCollection.updateOne(filter, updateDoc);
             res.json(result);
-        })
+        });
 
     } finally {
         // await client.close();
