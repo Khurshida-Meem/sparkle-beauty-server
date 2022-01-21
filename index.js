@@ -80,6 +80,13 @@ async function run() {
             res.send(result);
         });
 
+        // Get all Orders
+        app.get('/orders', async (req, res) => {
+            const cursor = orderCollection.find({});
+            const orders = await cursor.toArray();
+            res.send(orders);
+        });
+
         // orders by email
         app.post('/orders/byEmail', async (req, res) => {
             const email = req.body;
