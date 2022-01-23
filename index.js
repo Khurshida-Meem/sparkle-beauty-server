@@ -95,6 +95,7 @@ async function run() {
             res.send(order);
         });
 
+
         // delete order by id under one email
         app.delete('/orders/:id', async (req, res) => {
             const id = req.params.id;
@@ -102,6 +103,23 @@ async function run() {
             const result = await orderCollection.deleteOne(query);
             res.json(result);
         });
+
+        // UPDATE API
+        app.put('/orders/:id', async (req, res) => {
+            const order = req.body;
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    status: order.status
+                }
+            };
+            const result = await orderCollection.updateOne(filter, updateDoc, options);
+            res.json(result);
+
+        })
+
 
         // get admin
         app.get('/users/:email', async (req, res) => {
@@ -123,11 +141,11 @@ async function run() {
         });
 
         // GET users
-        app.get('/users', async (req, res) => {
-            const cursor = usersCollection.find({});
-            const users = await cursor.toArray();
-            res.send(users);
-        });
+        // app.get('/users', async (req, res) => {
+        //     const cursor = usersCollection.find({});
+        //     const users = await cursor.toArray();
+        //     res.send(users);
+        // });
 
         app.put('/users', async (req, res) => {
             const user = req.body;
